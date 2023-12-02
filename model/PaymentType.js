@@ -3,7 +3,10 @@ const { Schema, model } = mongoose;
 
 const paymentTypeSchema = new Schema({
     paymentTypeId: Integer,
-    paymentTypeName: String
+    paymentTypeName: {
+        type: String,
+        required: true
+    }
 })
 
 const paymentType = model("PaymentType", paymentTypeSchema)

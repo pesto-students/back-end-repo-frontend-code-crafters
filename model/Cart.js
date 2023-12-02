@@ -2,10 +2,32 @@ import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 
 const cartSchema = new Schema({
-    userId: Integer,
-    productId: Integer,
-    qty: Integer,
-    createdAt: Date,
+    userId: {
+        type: String,
+        ref: "User"
+    },
+    items: [{
+        productId: {
+            type: String,
+            ref: "Product"
+        },
+        name: {
+            type: String,
+            ref: "Product"
+        },
+        quantity: {
+            type: Number,
+            required: true,
+            min: [1, 'Quantity can not be less then 1'],
+            deafult: 1
+        },
+        price: Number
+    }],
+    createdAt: {
+        type: Date,
+        default: () => Date.now,
+        immutable: true
+    },
     updatedAt: Date
 })
 

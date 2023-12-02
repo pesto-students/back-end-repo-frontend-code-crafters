@@ -3,7 +3,10 @@ const { Schema, model } = mongoose;
 
 const categorySchema = new Schema({
     categoryId: Integer,
-    categoryName: String
+    categoryName: {
+        type: String,
+        required: true
+    }
 })
 
 const category = model("Category", categorySchema)

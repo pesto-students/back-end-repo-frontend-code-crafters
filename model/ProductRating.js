@@ -2,9 +2,12 @@ import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 
 const productRatingSchema = new Schema({
-    productId: Integer,
-    avgRating: Integer,
-    noOfReviews: Integer,
+    productId: {
+        type: String,
+        ref: "Product"
+    },
+    avgRating: Number,
+    noOfReviews: Number,
 })
 
 const productRating = model("ProductRating", productRatingSchema)
