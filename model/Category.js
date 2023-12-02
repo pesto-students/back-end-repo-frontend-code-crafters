@@ -2,7 +2,10 @@ import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 
 const categorySchema = new Schema({
-    categoryId: Integer,
+    categoryId: {
+        type: Number,
+        required: true
+    },
     categoryName: {
         type: String,
         required: true

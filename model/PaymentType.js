@@ -2,7 +2,10 @@ import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 
 const paymentTypeSchema = new Schema({
-    paymentTypeId: Integer,
+    paymentTypeId: {
+        type: Number,
+        required: true
+    },
     paymentTypeName: {
         type: String,
         required: true

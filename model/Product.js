@@ -11,10 +11,7 @@ const productSchema = new Schema({
         required: true,
         ref: "Category"
     },
-    description: {
-        type: String,
-        required: true
-    },
+    description: String,
     productImages: [String],
     qtyInStock: {
         type: Number,
