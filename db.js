@@ -15,6 +15,8 @@ async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
+
+    await listDatabases(client)
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
@@ -24,3 +26,12 @@ async function run() {
   }
 }
 run().catch(console.dir);
+
+async function listDatabases(client){
+  const dbList = await client.db().admin().listDatabases();
+
+  console.log("Databases:")
+  dbList.databases.forEach(db => {
+    console.log(`- ${db.name}`);
+  });
+}
