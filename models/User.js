@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import jwt from "jsonwebtoken";
 import Joi from "joi";
 import passwordComplexity from "joi-password-complexity";
-import { isEmail } from 'validator';
 const { Schema, model } = mongoose;
 
 const userSchema = new Schema({
@@ -19,8 +18,7 @@ const userSchema = new Schema({
         type: String,
         required: [true,'Please enter an email'],
         unique: true,
-        lowercase: true,
-        validate: [isEmail, 'Please enter a valid email']
+        lowercase: true
     },
     createdAt: {
         type: Date,
@@ -36,7 +34,7 @@ userSchema.methods.generateAuthToken = function () {
 	return token;
 };
 
-const User = mongoose.model("user", userSchema);
+const User = model("User", userSchema);
 
 const validate = (data) => {
 	const schema = Joi.object({

@@ -7,11 +7,20 @@ import passportStrategy from "./passport.js";
 import home from "./routes/home.js";
 import api from "./routes/api.js";
 import authRoute from "./routes/auth.js";
+import userRoute from "./routes/user.js"
 import dbConnection from "./db.js";
 
 // Middleware
 const app = express();
 app.use(express.json());
+app.use(
+  cors({
+    origin: "*",
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true,
+  })
+);
+
 app.use(
   cookieSession({
     name: "session",
@@ -21,13 +30,6 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(
-  cors({
-    origin: "*",
-    methods: "GET,POST,PUT,DELETE",
-    credentials: true,
-  })
-);
 
 // Database connection
 dbConnection();
@@ -36,6 +38,7 @@ dbConnection();
 app.use("/home", home);
 app.use("/api", api);
 app.use("/", authRoute);
+app.use("/user", userRoute);
 
 const port = process.env.PORT || 9001;
 app.listen(port, () => {

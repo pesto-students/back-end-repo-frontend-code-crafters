@@ -3,10 +3,6 @@ const router = express.Router();
 import passport from "passport";
 import * as authController from "../controllers/authController.js";
 
-// Email routes
-router.post("/register", authController.email_register);
-router.post("/login", authController.email_login);
-
 // Google SSO routes
 router.get("/login/success", authController.google_login_success);
 router.get("/login/failed", authController.google_login_failure);
