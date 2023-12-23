@@ -1,13 +1,14 @@
-import express from 'express'
+import express from "express";
 const router = express.Router();
-import passport from 'passport';
+import passport from "passport";
+import * as authController from "../controllers/authController.js";
 
-const authController = require('../controllers/authController');
+// Google SSO routes
+router.get("/login/success", authController.google_login_success);
+router.get("/login/failed", authController.google_login_failure);
+router.get("/google", passport.authenticate("google", ["profile", "email"]));
+router.get("/auth/google/callback", authController.google_auth_callback);
 
-const auth = require('../middleware/auth');
-
-router.post('/register', authController.signup);
-router.post('/login', authController.login);
-router.get('/user', auth, authController.get_user);
+router.get("/logout", authController.logout);
 
 export default router;
