@@ -4,8 +4,6 @@ import cors from "cors";
 import passport from "passport";
 import cookieSession from "cookie-session";
 import passportStrategy from "./passport.js";
-import home from "./routes/home.js";
-import api from "./routes/api.js";
 import authRoute from "./routes/auth.js";
 import userRoute from "./routes/user.js"
 import dbConnection from "./db.js";
@@ -35,8 +33,6 @@ app.use(passport.session());
 dbConnection();
 
 // Routes
-app.use("/home", home);
-app.use("/api", api);
 app.use("/", authRoute);
 app.use("/user", userRoute);
 

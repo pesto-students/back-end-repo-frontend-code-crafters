@@ -29,10 +29,7 @@ export const google_auth_callback = (req,res,next)=>{
       if (user){
         try {
           // your success code
-          return res.send({
-            data: user.data,
-            message:'Sign in successful' 
-          });
+          return res.redirect(`${process.env.CLIENT_URL}/home`)
         } catch (error) {
           // error msg 
           return res.send({ message: error.message });
