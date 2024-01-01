@@ -1,0 +1,59 @@
+import express from 'express';
+import mongoose from 'mongoose';
+import { v4 as uuidv4 } from 'uuid';
+
+const router = express.Router();
+
+// Define the vegetable schema
+const vegetableSchema = new mongoose.Schema({
+  class: String,
+  img: String,
+  name: String,
+  price: String,
+  div: String,
+  star: Number,
+  offpercent: String,
+  instock: String,
+  description: String,
+  detaildescription: String,
+});
+
+// Create a mongoose model based on the schema
+const Vegetable = mongoose.model('Vegetable', vegetableSchema);
+
+// MongoDB connection
+mongoose.connect('mongodb://localhost:27017/your_database_name', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+// Fetch data from MongoDB and add unique IDs
+router.get('/featuredproducts', async (req, res) => {
+  try {
+    const vegetablesData = await Vegetable.find();
+    if (!vegetablesData || vegetablesData.length === 0) {
+      // If there's no data in the database, you might want to populate it initially
+      await Vegetable.insertMany(vegetablesData.map(vegetable => ({ ...vegetable, id: uuidv4() })));
+      res.json(vegetablesData);
+    } else {
+      res.json(vegetablesData);
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+router.get('/products/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const product = await Vegetable.findOne({ id });
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    res.json(product);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+export default router;

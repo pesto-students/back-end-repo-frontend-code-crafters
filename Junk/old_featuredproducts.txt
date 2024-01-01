@@ -1,0 +1,212 @@
+import express from 'express';
+import { v4 as uuidv4 } from 'uuid';
+
+const router = express.Router();
+
+const vegetablesData = [
+    {
+      class: 'product-4x',
+      img: '/image26@2x.png',
+      name: 'Green Apple',
+      price: '₹14.99',
+      div: '₹48.00',
+      star:4,
+      offpercent: '64% Off',
+      instock: 'In Stock',
+      description:'Experience the crisp sweetness of nature with our handpicked, premium-grade Green Apples. Renowned for their delightful taste and refreshing crunch, these apples are sourced from the finest orchards, ensuring exceptional quality and freshness.',
+      detaildescription:'Green Apples are a food item that replenish 50 points of health in Legends of Equestria. They can be purchased from Sales Pitch in the Crystal Kingdom, Micro Transaction in Cantermore, or Granny Grey in Ponydale. The Granny Smith, also known as a green apple or sour apple, is an apple cultivar that originated in Australia in 1868. It is thought to be a hybrid of Malus sylvestris, the European wild apple, with the domesticated apple Malus domestica as the polleniser. The US Apple Association reported in 2019 that the Granny Smith was the third most popular apple in the United States of America. Mrs. Green Apple is a three-member Japanese rock band known for performing the fourth ending theme to the anime series Yu-Gi-Oh!. Green Apple Books & Music is an independent bookstore in the Richmond District of San Francisco, California. The store houses over 250,000 titles, as well as 60,000 available online. Fanta Green Apple is a more sour version of Fanta Apple, available online and at select stores in the United States'
+    },
+    {
+      class: 'product-4x1',
+      img: '/image27@2x.png',
+      name: 'Chanise Cabbage',
+      price: '₹14.99',
+      div: '₹48.00',
+      star:4,
+      offpercent: '64% Off',
+      instock: 'In Stock',
+      description:'Indulge in the delightful flavors and incredible freshness of our Chanise Cabbage. Handpicked and cultivated with utmost care, this cabbage variety is a culinary marvel, known for its crisp texture and mild, slightly sweet taste.',
+      detaildescription:'Chinese cabbage refers to two cultivar groups of leaf vegetables commonly used in Chinese cuisine: the Pekinensis Group (napa cabbage) and the Chinensis Group (bok choy). Both are related to the Western cabbage and are of the same species as the common turnip. Napa cabbage is widely grown in eastern Asia and is commonly used to make kimchi, a traditional Korean dish made of spicy fermented vegetables. It is also known as dàbáicài in Mandarin Chinese and Chihili or Michihili in Japanese'
+
+    },
+    {
+      class: 'product-4x2',
+      img: '/image28@2x.png',
+      name: 'Green Capsicum',
+      price: '₹14.99',
+      div: '₹48.00',
+      star:4,
+      offpercent: '64% Off',
+      instock: 'In Stock',
+      description:'Discover the vibrant and crisp essence of our Green Capsicum, a staple in kitchens worldwide. Known for its vivid color, satisfying crunch, and distinctive sweet yet slightly tangy flavor, our premium-grade Green Capsicum adds a burst of freshness to every meal.',
+      detaildescription:'Green Capsicum is a cultivar of the species Capsicum annuum that produces bell-shaped fruits in different colors, including red, yellow, orange, green, white, chocolate, candy cane striped, and purple. It is commonly referred to as a "pepper" or "capsicum" depending on its color. Bell peppers are sometimes grouped with less pungent pepper varieties of Capsicum annuum known as "sweet peppers." The jalapeo is a medium-sized chili pepper that is commonly picked and consumed while still green, but occasionally it is allowed to fully ripen and turn crimson red. Capsicum is a genus of plants from the nightshade family that is used as spices, vegetables, and medicines.'
+    },
+    {
+      class: 'product-4x3',
+      img: '/image3@2x.png',
+      name: 'Green Littuce',
+      price: '₹14.99',
+      div: '₹48.00',
+      star:4,
+      offpercent: '64% Off',
+      instock: 'In Stock',
+      description:'Indulge in the exceptional freshness and delicate crunch of our Green Lettuce, a staple in salads and a versatile ingredient in various culinary creations. Sourced from trusted farms committed to quality, our lettuce offers a delightful taste and crisp texture, perfect for elevating your meals.',
+      detaildescription:'Romaine lettuce is a type of lettuce that grows in a tall head of sturdy dark green leaves with firm ribs down their centers. It is commonly used in Caesar salad and is commonly used in Middle Eastern cuisine. Romaine lettuce is tolerant of heat and is often sold as whole heads or as "hearts" that have had the outer leaves removed and are often packaged together in North America. Red leaf lettuces are a group of lettuce cultivars with red leaves, including "Lollo Rossa", "New Red Fire Lettuce", "Red Sails Lettuce", "Redina Lettuce", "Henrys Leafy Friend", Galactic Lettuce, and the "Benito Lettuce". Sea lettuce is a group of edible green algae that is widely distributed along the coasts of the worlds oceans. It is eaten by a number of different sea animals, including manatees and the sea slugs known as sea hares. Many species of sea lettuce are a food source for humans in Scandinavia, Great Britain, Ireland, China, and Japan.'
+    },{
+      class:'product-4x',
+      img:'/image@2x.png',
+      name:'Big Potatos',
+      price:'₹14.99',
+      div:'₹20.99',
+      star:4,
+      offpercent: '64% Off',
+      instock: 'In Stock',
+      description:'Potatoes, known for their versatility and rich taste, are a staple in various cuisines worldwide. These fresh, high-quality potatoes are harvested at their prime to ensure the best flavor and texture. Whether mashed, roasted, fried, or used in stews and soups, these Potatoes are an essential ingredient for countless recipes. Their earthy flavor and fluffy texture make them an excellent addition to any meal.',
+      detaildescription:''
+   
+    },
+    
+    {
+    class:'product-4x1',
+    img:'/image1@2x.png',
+    name:'Eggplant',
+    price:'₹14.99',
+    div:'₹20.99',
+    star:4,
+    offpercent: '64% Off',
+    instock: 'In Stock',
+    description:'Eggplant, also known as aubergine, is a versatile and nutritious vegetable cherished in various cuisines globally. These fresh Eggplants are carefully selected for their vibrant color, firmness, and exceptional taste. With a mild, slightly earthy flavor and a unique texture, Eggplants are a culinary marvel. Their ability to absorb flavors makes them ideal for creating a wide range of delectable dishes.',
+    detaildescription:''
+    
+    },
+   
+   
+    {
+    class: 'product-4x2',
+    img:'/image4@2x.png',
+    name:'Corn',
+    price:'₹14.99',
+    div:'₹20.99',
+    star:4,
+    offpercent: '64% Off',
+    instock: 'In Stock',
+    description:'Freshly picked and bursting with natural sweetness, our Corn promises a delightful taste of summer in every bite. Sourced from the finest fields, these tender, golden ears of Corn are handpicked at the peak of ripeness to ensure exceptional quality. Known for their vibrant kernels and juicy texture, Corn is a versatile staple that adds flavor and nutrition to various dishes.',
+    detaildescription:''
+    },
+    
+    {
+    class: 'product-4x3',
+    img:'/image29@2x.png',
+    name:'Ladies Finger',
+    price:'₹14.99',
+    div:'₹20.99',
+    star:4,
+    offpercent: '64% Off',
+    instock: 'In Stock',
+    description:'Discover the culinary versatility of our fresh and vibrant Ladies Finger, also known as Okra. Sourced from trusted farms, these slender green pods are handpicked to ensure the highest quality and flavor. With a mild taste and tender texture, Ladies Finger is a beloved ingredient in various global cuisines, prized for its nutritional value and culinary adaptability.',
+    detaildescription:''
+    },
+    
+    {
+    class: 'product-4x4',
+    img:'/image7@2x.png',
+    name:'Green Cucumber',
+    price:'₹14.99',
+    div:'₹20.99',
+    star:4,
+    offpercent: '64% Off',
+    instock: 'In Stock',
+    description:'Indulge in the crisp, refreshing taste of our Green Cucumbers, a quintessential addition to any kitchen. Handpicked at the peak of freshness, these vibrant cucumbers boast a delightful crunch and a mild, cool flavor, making them a versatile ingredient for a wide array of culinary creations.',
+    detaildescription:''
+    },
+    {
+    class: 'product-4x5',
+    img:'/image8@2x.png',
+    name:'Red Capsicum',
+    price:'₹14.99',
+    div:'₹20.99',
+    star:4,
+    offpercent: '64% Off',
+    instock: 'In Stock',
+    description:'Elevate your dishes with the vibrant and flavorful Red Capsicum, a versatile ingredient that brings a delightful burst of color and taste to your culinary creations. Handpicked at the peak of ripeness, our Red Capsicums offer a sweet and mildly tangy flavor, perfect for both raw and cooked dishes.',
+    detaildescription:''
+    },
+    {
+    class: 'product-4x6',
+    img:'/image9@2x.png',
+    name:'Fresh Cauliflower',
+    price:'₹14.99',
+    div:'₹20.99',
+    star:4,
+    offpercent: '64% Off',
+    instock: 'In Stock',
+    description:'Discover the crisp and delightful taste of our Fresh Cauliflower, a versatile vegetable known for its mild flavor and incredible culinary adaptability. Handpicked at the peak of freshness, our cauliflowers boast a pristine white hue, firm florets, and a tender texture, ensuring a delightful addition to your meals.',
+    detaildescription:''
+    },
+    {
+    class: 'product-4x7',
+    img:'/image10@2x.png',
+    name:'Green Chillies',
+    price:'₹14.99',
+    div:'₹20.99',
+    star:4,
+    offpercent: '64% Off',
+    instock: 'In Stock',
+    description:'Add a zesty kick to your dishes with our vibrant and flavorful Green Chillies. These fresh, vibrant peppers are known for their distinctive heat and bright color, elevating the taste of your culinary creations. Handpicked for optimal freshness, our green chillies deliver both spice and freshness in every bite.',
+    detaildescription:''
+    },
+    {
+    class: 'product-4x8',
+    img:'/image12@2x.png',
+    name:'Red Chillies',
+    price:'₹14.99',
+    div:'₹20.99',
+    star:4,
+    offpercent: '64% Off',
+    instock: 'In Stock',
+    description:'Our vibrant and fiery Red Chillies bring a bold punch of flavor to your dishes. These hand-selected, fiery red peppers are known for their intense heat and deep, earthy notes, enhancing the taste and vibrancy of your culinary creations. Packed with both heat and flavor, these chillies are a must-have for spice lovers and culinary enthusiasts.',
+    detaildescription:''
+    },
+    {
+    class: 'product-4x9',
+    img:'/image13@2x.png',
+    name:'Tomatto',
+    price:'₹14.99',
+    div:'₹20.99',
+    star:4,
+    offpercent: '64% Off',
+    instock: 'In Stock',
+    description:'Fresh, juicy, and bursting with flavor, our premium Tomatoes are a kitchen staple for any culinary enthusiast. Handpicked at the peak of ripeness, these tomatoes offer a delightful combination of tangy sweetness and vibrant acidity, perfect for elevating your dishes to gourmet levels.',
+    detaildescription:''
+    },
+    {
+    class: 'product-4x10',
+    img:'/image14@2x.png',
+    name:'Mango',
+    price:'₹14.99',
+    div:'₹20.99',
+    star:4,
+    offpercent: '64% Off',
+    instock: 'In Stock',
+    description:'Indulge in the succulent sweetness of our premium Mangoes, natures gift to tantalize your taste buds. Sourced from the finest orchards, these tropical delights embody a perfect balance of rich, juicy flesh and an unmistakable aroma. Each bite promises a burst of sunshine and tropical paradise.',
+    detaildescription:''
+    },
+    
+  ];
+// Add a unique id to each object in the vegetablesData array
+vegetablesData.forEach((vegetable) => {
+  vegetable.id = uuidv4();
+});
+router.get('/featuredproducts', (req, res) => {
+  res.json(vegetablesData);
+});
+router.get('/products/:id', (req, res) => {
+  const { id } = req.params;
+  const product = vegetablesData.find((vegetable) => vegetable.id === id);
+  if (!product) {
+    return res.status(404).json({ message: 'Product not found' });
+  }
+  res.json(product);
+});
+
+export default router;

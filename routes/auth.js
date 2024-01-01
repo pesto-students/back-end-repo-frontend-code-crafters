@@ -10,4 +10,4 @@ router.post('/register', authController.signup);
 router.post('/login', authController.login);
 router.get('/user', auth, authController.get_user);
 
-export default router;
+export default router;          
