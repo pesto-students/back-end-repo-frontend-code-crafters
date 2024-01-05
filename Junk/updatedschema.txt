@@ -53,8 +53,15 @@ const User = mongoose.model('User', UserSchema);
 
 const CartItemSchema = new mongoose.Schema({
   userId: String,
-  productId: String,
+  productId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Product' // Reference to the Product model
+  },
   quantity: Number,
+  img: String, // Add fields from Product schema
+  name: String,
+  price: String,
+  instock: String,
   // Add other necessary fields here
 });
 
@@ -148,26 +155,6 @@ app.get('/api/products/:id', async (req, res) => {
 });
 
 // Modify the route to get a single product by ID
-// Endpoint to remove a product from the cart for a specific user
-app.delete('/api/app/cart/:userId/:productId/remove', async (req, res) => {
-  const { userId, productId } = req.params;
-
-  try {
-    // Find the cart item for the given userId and productId
-    const cartItem = await CartItem.findOne({ userId, productId });
-
-    if (!cartItem) {
-      return res.status(404).json({ message: 'Product not found in the cart' });
-    }
-
-    // Remove the cart item
-    await CartItem.deleteOne({ userId, productId });
-
-    res.json({ message: 'Product removed from the cart' });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
 
 
 
@@ -196,17 +183,29 @@ app.get('/api/cart/:userId/:productId/quantity', async (req, res) => {
   const { userId, productId } = req.params;
 
   try {
-    const cartItem = await CartItem.findOne({ userId, productId });
+    const cartItem = await CartItem.findOne({ userId, productId })
+      .populate({
+        path: 'productId',
+        select: 'img name price instock' // Select fields from Product schema
+      });
 
     if (!cartItem) {
       return res.status(404).json({ message: 'Product not found in the cart' });
     }
 
-    res.json({ quantity: cartItem.quantity });
+    res.json({
+      quantity: cartItem.quantity,
+      img: cartItem.productId.img,
+      name: cartItem.productId.name,
+      price: cartItem.productId.price,
+      instock: cartItem.productId.instock
+      // Add other necessary fields from Product schema
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
+
 
 // Assuming you already have your route defined in Express
 
@@ -216,7 +215,11 @@ app.get('/api/app/cart/:userId', async (req, res) => {
 
   try {
     // Find all products in the cart for the given userId
-    const cartItems = await CartItem.find({ userId }).populate('productId');
+    const cartItems = await CartItem.find({ userId })
+      .populate({
+        path: 'productId',
+        select: 'img name price instock' // Select fields from Product schema
+      });
 
     res.json(cartItems);
   } catch (err) {
@@ -225,19 +228,31 @@ app.get('/api/app/cart/:userId', async (req, res) => {
 });
 
 
+
 app.put('/api/app/cart/:userId/:productId/quantity/add', async (req, res) => {
   const { userId, productId } = req.params;
 
   try {
-    let cartItem = await CartItem.findOne({ userId, productId });
+    let cartItem = await CartItem.findOne({ userId, productId })
+      .populate('productId');
 
     if (!cartItem) {
-      // If the product is not found, create a new cart item
+      const product = await Product.findById(productId); // Fetch product details
+
+      if (!product) {
+        return res.status(404).json({ message: 'Product not found' });
+      }
+
+      // If the product is not found in the cart, create a new cart item
       cartItem = new CartItem({
         userId,
         productId,
-        quantity: 1 // Set the initial quantity to 1
-        // Add other necessary fields if required
+        quantity: 1,
+        img: product.img,
+        name: product.name,
+        price: product.price,
+        instock: product.instock
+        // Assign other fields from the Product schema as needed
       });
 
       await cartItem.save();
@@ -256,20 +271,24 @@ app.put('/api/app/cart/:userId/:productId/quantity/add', async (req, res) => {
 });
 
 
+
 app.put('/api/app/cart/:userId/:productId/quantity/sub', async (req, res) => {
   const { userId, productId } = req.params;
 
   try {
-    // Your logic to find the cart item and increment quantity
-    // This might involve querying the database to find the user's cart item by userId and productId, then incrementing its quantity by 1
-
-    // Example:
-    let cartItem = await CartItem.findOne({ userId, productId });
+    let cartItem = await CartItem.findOne({ userId, productId })
+      .populate('productId');
 
     if (!cartItem) {
       return res.status(404).json({ message: 'Product not found in the cart' });
     }
 
+    // Check if quantity is already zero, prevent negative values
+    if (cartItem.quantity <= 0) {
+      return res.status(400).json({ message: 'Quantity already at minimum' });
+    }
+
+    // If the product is found, decrement the quantity
     cartItem.quantity -= 1;
     await cartItem.save();
 
@@ -278,6 +297,7 @@ app.put('/api/app/cart/:userId/:productId/quantity/sub', async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
 
 
 // ... (your existing code)

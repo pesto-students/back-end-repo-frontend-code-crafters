@@ -148,26 +148,6 @@ app.get('/api/products/:id', async (req, res) => {
 });
 
 // Modify the route to get a single product by ID
-// Endpoint to remove a product from the cart for a specific user
-app.delete('/api/app/cart/:userId/:productId/remove', async (req, res) => {
-  const { userId, productId } = req.params;
-
-  try {
-    // Find the cart item for the given userId and productId
-    const cartItem = await CartItem.findOne({ userId, productId });
-
-    if (!cartItem) {
-      return res.status(404).json({ message: 'Product not found in the cart' });
-    }
-
-    // Remove the cart item
-    await CartItem.deleteOne({ userId, productId });
-
-    res.json({ message: 'Product removed from the cart' });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
 
 
 

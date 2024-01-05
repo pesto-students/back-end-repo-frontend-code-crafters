@@ -2,6 +2,24 @@ import mongoose from 'mongoose';
 import { isEmail } from 'validator';
 const { Schema, model } = mongoose;
 
+//const mongoose = require("mongoose");
+
+const UserSchema = new Schema(
+  {
+    username: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  { timestamps: true }
+);
+const user = model("User", UserSchema)
+export default user
+//module.exports = mongoose.model("User", UserSchema);
+/*
 const userSchema = new Schema({
     name: {
         type: String,
@@ -28,3 +46,4 @@ const userSchema = new Schema({
 
 const user = model("User", userSchema)
 export default user
+*/
