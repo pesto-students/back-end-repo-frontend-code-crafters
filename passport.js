@@ -12,7 +12,7 @@ export default passport.use(
     },
     function (accessToken, refreshToken, profile, callback) {
       callback(null, profile);
-      console.log(profile);
+      // console.log(profile);
     }
   )
 );

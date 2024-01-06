@@ -43,7 +43,9 @@ export const email_register = async (req, res) => {
     const hashPassword = await bcrypt.hash(password, salt);
     const newUser = new User({ ...req.body, password: hashPassword });
     await newUser.save();
-    res.status(201).send({ message: "User created successfully" });
+    const token = newUser[0].generateAuthToken();
+    res.status(200).send({ data: token, message: "User created and logged in successfully" });
+    // res.status(201).send({ message: "User created successfully" });
   } catch (error) {
     res.status(500).send({ message: "Internal server error" });
   }
