@@ -1,7 +1,8 @@
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import passport from "passport";
 import "dotenv/config";
-
+console.log("Value",process.env.SOME_VALUE);
+console.log("Secret",process.env.SOME_VALUE_SECRET);
 export default passport.use(
   new GoogleStrategy(
     {
@@ -12,7 +13,7 @@ export default passport.use(
     },
     function (accessToken, refreshToken, profile, callback) {
       callback(null, profile);
-      console.log(profile);
+      // console.log(profile);
     }
   )
 );
