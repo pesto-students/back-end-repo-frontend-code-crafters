@@ -8,7 +8,7 @@ import authRoute from "./routes/auth.js";
 import userRoute from "./routes/user.js";
 import categoryRoute from "./routes/category.js";
 import dbConnection from "./db.js";
-
+import paymentRoute from "./routes/payment.js"
 // Middleware
 const app = express();
 app.use(express.json());
@@ -37,6 +37,7 @@ dbConnection();
 app.use("/", authRoute);
 app.use("/user", userRoute);
 app.use("/category", categoryRoute);
+app.use("/payment", paymentRoute);
 
 const port = process.env.PORT || 9001;
 app.listen(port, () => {
