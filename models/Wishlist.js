@@ -2,20 +2,20 @@ import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 
 const wishlistSchema = new Schema({
-    userId: {
-        type: String,
+    user_id: {
+        type: Schema.Types.ObjectId,
         ref: "User"
     },
-    productId: {
-        type: String,
+    product_id: {
+        type: Schema.Types.ObjectId,
         ref: "Product"
     },
-    createdAt: {
+    created_at: {
         type: Date,
-        default: () => Date.now,
+        default: Date.now,
         immutable: true
     },
-    updatedAt: Date
+    updated_at: Date
 })
 
 const wishlist = model("Wishlist", wishlistSchema)
