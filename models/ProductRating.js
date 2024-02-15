@@ -1,14 +1,20 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
 const productRatingSchema = new Schema({
-    productId: {
-        type: String,
-        ref: "Product"
-    },
-    avgRating: Number,
-    noOfReviews: Number,
-})
+  id: {
+    type: Schema.Types.ObjectId,
+    ref: "Product",
+  },
+  rating: {
+    type: Number,
+    default: 0,
+  },
+  no_of_reviews: {
+    type: Number,
+    default: 0,
+  },
+});
 
-const productRating = model("ProductRating", productRatingSchema)
-export default productRating
+const productRating = model("ProductRating", productRatingSchema);
+export default productRating;

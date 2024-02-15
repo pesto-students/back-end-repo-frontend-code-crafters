@@ -2,11 +2,11 @@ import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 
 const paymentTypeSchema = new Schema({
-    paymentTypeId: {
+    id: {
         type: Number,
         required: true
     },
-    paymentTypeName: {
+    name: {
         type: String,
         required: true
     }
