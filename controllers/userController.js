@@ -45,7 +45,6 @@ export const email_register = async (req, res) => {
     await newUser.save();
     const token = newUser[0].generateAuthToken();
     res.status(200).send({ data: token, message: "User created and logged in successfully" });
-    // res.status(201).send({ message: "User created successfully" });
   } catch (error) {
     res.status(500).send({ message: "Internal server error" });
   }
