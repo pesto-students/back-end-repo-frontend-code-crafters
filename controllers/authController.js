@@ -37,7 +37,7 @@ export const google_auth_callback = (req, res, next) => {
           });
 
           res.cookie("token", token, { httpOnly: false });
-          res.redirect(`${process.env.CLIENT_URL}/shop`);
+          res.redirect(`${process.env.CLIENT_URL}`);
         } catch (error) {
           // error msg
           return res.send({ message: error.message });
