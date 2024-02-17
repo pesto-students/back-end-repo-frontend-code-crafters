@@ -31,7 +31,6 @@ export const google_auth_callback = (req, res, next) => {
       }
       if (user) {
         try {
-          // your success code
           const token = jwt.sign({ _id: user.id }, process.env.JWT_SECRET, {
             expiresIn: "7d",
           });
@@ -39,7 +38,6 @@ export const google_auth_callback = (req, res, next) => {
           res.cookie("token", token, { httpOnly: false });
           res.redirect(`${process.env.CLIENT_URL}`);
         } catch (error) {
-          // error msg
           return res.send({ message: error.message });
         }
       }
