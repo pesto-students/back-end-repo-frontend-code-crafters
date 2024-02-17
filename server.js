@@ -37,7 +37,7 @@ dbConnection();
 app.use("/", authRoute);
 app.use("/user", userRoute);
 app.use("/category", categoryRoute);
-app.use("/payment", paymentRoute);
+app.use("/api/payment", paymentRoute);
 
 const port = process.env.PORT || 9001;
 app.listen(port, () => {
