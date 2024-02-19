@@ -19,7 +19,6 @@ export const email_login = async (req, res) => {
 
     const token = user[0].generateAuthToken();
     res.status(200).send({ data: token, message: "Logged in successfully" });
-    res.redirect(process.env.CLIENT_URL);
   } catch (error) {
     res.status(500).send({ message: "Internal server error" });
   }
@@ -27,15 +26,13 @@ export const email_login = async (req, res) => {
 
 export const email_register = async (req, res) => {
   try {
-    const { error } = validate(req.body);
-    if (error)
-      return res.status(400).send({ message: error.details[0].message });
-    console.log("in register");
+    // const { error } = validate(req.body);
+    // if (error)
+    //   return res.status(400).send({ message: error.details[0].message });
     const { name, email, password } = req.body;
 
     const user = await User.find({ email: email });
     if (user.length > 0) {
-      res.redirect(`${CLIENT_URL}/login}`);
       return res
         .status(409)
         .send({ message: "User with given email already exists!" });
